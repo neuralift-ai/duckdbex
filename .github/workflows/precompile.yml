@@ -15,6 +15,7 @@ jobs:
       MIX_ENV: "prod"
       OTP_VERSION: ${{ matrix.otp }}
       ELIXIR_VERSION: ${{ matrix.elixir }}
+      ImageOS: ${{ matrix.image_os }}
 
     name: Precompile for Elixir ${{ matrix.elixir }}, OTP ${{ matrix.otp }}, OS ${{ matrix.os }}
     strategy:
@@ -23,6 +24,11 @@ jobs:
         os: ["ubuntu-22.04", "windows-2022", "macos-12"]
         elixir: ["1.15"]
         otp: ["26", "25"]
+        include:
+          - os: "windows-2022"
+            image_os: "win22"
+          - os: "ubuntu-22.04"
+            image_os: "ubuntu22"
     steps:
       - uses: actions/checkout@v3
       - uses: erlef/setup-beam@v1
