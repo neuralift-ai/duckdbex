@@ -21,12 +21,10 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: ["ubuntu-22.04", "windows-2022", "macos-12"]
+        os: ["ubuntu-22.04", "macos-12"]
         elixir: ["1.15"]
         otp: ["26", "25"]
         include:
-          - os: "windows-2022"
-            image_os: "win22"
           - os: "ubuntu-22.04"
             image_os: "ubuntu22"
     steps:
@@ -40,14 +38,22 @@ jobs:
       - name: Install erlang and elixir
         if: matrix.os == 'macos-12'
         run: |
-          brew install erlang elixir
+          if [ "${{ matrix.otp }}" = "25" ]; then
+            brew install "erlang@${{ matrix.otp }}"
+            brew link --overwrite "erlang@${{ matrix.otp }}"
+
+            export ELIXIR_VER=1.16.2
+            mkdir -p "${HOME}/.elixir/v${ELIXIR_VER}"
+            cd "${HOME}/.elixir/v${ELIXIR_VER}"
+            wget "https://github.com/elixir-lang/elixir/releases/download/v${ELIXIR_VER}/elixir-otp-${{ matrix.otp }}.zip" -O "elixir-${ELIXIR_VER}.zip"
+            unzip "elixir-${ELIXIR_VER}.zip"
+            rm -f "elixir-${ELIXIR_VER}.zip"
+            export PATH="${HOME}/.elixir/v${ELIXIR_VER}/bin:${PATH}"
+          else
+            brew install erlang elixir
+          fi
           mix local.hex --force
           mix local.rebar --force
-
-      - uses: ilammy/msvc-dev-cmd@v1
-        if: matrix.os == 'windows-2022'
-        with:
-          arch: x64
 
       - name: Install system dependencies
         if: matrix.os == 'ubuntu-22.04'

@@ -20,17 +20,17 @@ defmodule Duckdbex.MixProject do
       # elixir_make specific config
       make_precompiler: {:nif, CCPrecompiler},
       make_precompiler_url:
-        "https://github.com/neuralift/duckdbex/releases/download/v#{@version}/@{artefact_filename}",
+        "https://github.com/neuralift-ai/duckdbex/releases/download/v#{@version}/@{artefact_filename}",
       make_precompiler_filename: "duckdb_nif",
       make_precompiler_nif_versions: [
-        versions: ["2.15", "2.16"],
+        versions: ["2.16", "2.17"],
         availability: &target_available_for_nif_version?/2
       ],
       cc_precompiler: [cleanup: "clean"],
       # Docs
       name: "Duckdbex",
-      source_url: "https://github.com/neuralift/duckdbex/",
-      homepage_url: "https://github.com/neuralift/duckdbex/",
+      source_url: "https://github.com/neuralift-ai/duckdbex/",
+      homepage_url: "https://github.com/neuralift-ai/duckdbex/",
       docs: docs()
     ]
   end
@@ -77,7 +77,7 @@ defmodule Duckdbex.MixProject do
       name: "duckdbex",
       licenses: ["MIT"],
       links: %{
-        "GitHub" => "https://github.com/neuralift/duckdbex/"
+        "GitHub" => "https://github.com/neuralift-ai/duckdbex/"
       }
     ]
   end
@@ -90,7 +90,7 @@ defmodule Duckdbex.MixProject do
         "CHANGELOG.md": []
       ],
       source_ref: "v#{@version}",
-      source_url: "https://github.com/neuralift/duckdbex/"
+      source_url: "https://github.com/neuralift-ai/duckdbex/"
     ]
   end
 
