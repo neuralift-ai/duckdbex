@@ -23,8 +23,7 @@ defmodule Duckdbex.MixProject do
         "https://github.com/neuralift-ai/duckdbex/releases/download/v#{@version}/@{artefact_filename}",
       make_precompiler_filename: "duckdb_nif",
       make_precompiler_nif_versions: [
-        versions: ["2.16", "2.17"],
-        availability: &target_available_for_nif_version?/2
+        versions: ["2.16", "2.17"]
       ],
       cc_precompiler: [cleanup: "clean"],
       # Docs
@@ -50,14 +49,6 @@ defmodule Duckdbex.MixProject do
       {:cc_precompiler, "~> 0.1", runtime: false},
       {:ex_doc, "~> 0.24", only: :dev, runtime: false}
     ]
-  end
-
-  def target_available_for_nif_version?(target, nif_version) do
-    if String.contains?(target, "windows") do
-      nif_version == "2.16"
-    else
-      true
-    end
   end
 
   defp package do
